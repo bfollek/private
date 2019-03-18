@@ -1,12 +1,10 @@
 # Private—Expose private functions for testing.
 
-Sometimes you want to test all those private functions in your
-modules. But Elixir doesn't make it easy to get to them. As a
-result, you end up trying to exercise them by setting up convoluted
-calls to the public API.
+Sometimes you want to get at all those private functions in your
+modules. But Elixir doesn't make it easy to get at them. 
 
 `private` to the rescue. It switches the visibility of functions so
-that they are exposed when the Mix environment is `:test`, and
+that they are exposed when the Mix environment is `:dev` or `:test`, and
 private otherwise.
 
       defmodule MyMod do
@@ -29,9 +27,9 @@ private otherwise.
 
 
 All functions in the `private` block will be defined as private
-unless the Mix environment is `:test`. 
+unless the Mix environment is `:dev` or `:test`. 
 
-In the test environment, `def` will be left unchanged, and `defp` will
+In the dev and test environments, `def` will be left unchanged, and `defp` will
 be changed to `def`. In all other environments, `def` will be changed
 to `defp` and `defp` will be left unchanged.
 
@@ -40,7 +38,7 @@ to `defp` and `defp` will be left unchanged.
 
 ```elixir
 @deps [
-  private: "> 0.0.0"
+  {:private, git: "https://github.com/bfollek/private.git"}
 ]
 ```
 
